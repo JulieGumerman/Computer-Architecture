@@ -76,7 +76,7 @@ class CPU:
             command = self.ram[pc]
             #LDI
             if command == (130,):
-                print("I <3 Mountains")
+                self.ram_write(1,8)
                 pc += 1
             #HALT
             elif command == 1:
@@ -86,15 +86,16 @@ class CPU:
             elif command == (71,):
                 # print("I <3 crafty things.")
                 # pc += 1
-                self.ram_write()
+                self.ram_read(1)
                 pc +=1
 
     
-    def ram_read(self, location):
-        self.ram[location]
+    def ram_read(self, mar):
+        print(self.ram[mar])
     
-    def ram_write(self):
+    def ram_write(self, mar, mdr):
         # ram_a = self.ram[self.counter + 1]
         # ram_b = self.ram[self.counter + 2]
         # self.ram[reg_a] += self.ram[reg_b]
-        print("WOOOT!!!")
+        #print("WOOOT!!!")
+        self.ram[mar] = mdr
