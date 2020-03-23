@@ -9,11 +9,12 @@ class CPU:
         """Construct a new CPU."""
         self.ram = [0] * 256
         self.counter = 0
+        self.address = [0]
 
     def load(self):
         """Load a program into memory."""
 
-        address = 0
+        self.address = 0
 
         # For now, we've just hardcoded a program:
         LDI = 0b10000010,
@@ -34,8 +35,8 @@ class CPU:
 
 
         for instruction in program:
-            self.ram[address] = instruction
-            address += 1
+            self.ram[self.address] = instruction
+            self.address += 1
 
 
     def alu(self, op, reg_a, reg_b):
@@ -70,13 +71,11 @@ class CPU:
     def run(self):
         pc = 0
         running = True
-        for item in self.ram:
-            print("FML", item)
         while running:
             command = self.ram[pc]
             #LDI
             if command == (130,):
-                self.ram_write(1,8)
+                self.ram_write(8)
                 pc += 1
             #HALT
             elif command == 1:
@@ -84,18 +83,13 @@ class CPU:
                 pc += 1
             #PRN
             elif command == (71,):
-                # print("I <3 crafty things.")
-                # pc += 1
-                self.ram_read(1)
+                self.ram_read(self.address)
                 pc +=1
 
     
     def ram_read(self, mar):
         print(self.ram[mar])
     
-    def ram_write(self, mar, mdr):
-        # ram_a = self.ram[self.counter + 1]
-        # ram_b = self.ram[self.counter + 2]
-        # self.ram[reg_a] += self.ram[reg_b]
-        #print("WOOOT!!!")
-        self.ram[mar] = mdr
+    def ram_write(self, mdr):
+        self.address += 1
+        self.ram[self.address] = mdr
