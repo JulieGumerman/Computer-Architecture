@@ -16,15 +16,19 @@ class CPU:
         address = 0
 
         # For now, we've just hardcoded a program:
+        LDI = 0b10000010,
+        PRN = 0b01000111,
+        HALT = 0b00000001
+
 
         program = [
             # From print8.ls8
-            0b10000010, # LDI R0,8
-            0b00000000,
-            0b00001000,
-            0b01000111, # PRN R0
-            0b00000000,
-            0b00000001, # HLT
+            LDI, # LDI R0,8
+            #0b00000000,
+            #0b00001000,
+            PRN,
+            #0b00000000,
+            HALT, # HLT
         ]
 
 
@@ -64,12 +68,33 @@ class CPU:
         print()
 
     def run(self):
-        pass
+        pc = 0
+        running = True
+        for item in self.ram:
+            print("FML", item)
+        while running:
+            command = self.ram[pc]
+            #LDI
+            if command == (130,):
+                print("I <3 Mountains")
+                pc += 1
+            #HALT
+            elif command == 1:
+                running = False
+                pc += 1
+            #PRN
+            elif command == (71,):
+                # print("I <3 crafty things.")
+                # pc += 1
+                self.ram_write()
+                pc +=1
+
     
-    def ram_read(self):
-        pass
+    def ram_read(self, location):
+        self.ram[location]
     
     def ram_write(self):
-        ram_a = self.ram[self.counter + 1]
-        ram_b = self.ram[self.counter + 2]
-        self.ram[reg_a] += self.ram[reg_b]
+        # ram_a = self.ram[self.counter + 1]
+        # ram_b = self.ram[self.counter + 2]
+        # self.ram[reg_a] += self.ram[reg_b]
+        print("WOOOT!!!")
