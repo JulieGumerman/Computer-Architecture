@@ -93,3 +93,6 @@ class CPU:
     def ram_write(self, mdr):
         self.address += 1
         self.ram[self.address] = mdr
+
+
+##################
