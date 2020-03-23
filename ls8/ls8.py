@@ -9,5 +9,3 @@ cpu = CPU()
 
 cpu.load()
 cpu.run()
-cpu.ram_read()
-cpu.ram_write()
