@@ -18,6 +18,14 @@
 ### LS8.PY
 * Calls the CPU class; this is the file you run to run the server
 
-* Note what has been implemented, and what hasn't.
+
+# What has and has not been implemented
+
+### What I have
+
+### What I need
+[ ] someplace to store ram
+[ ] at the start, nothing is in the init file
+
 * Read this whole file.
 * Skim the spec.
