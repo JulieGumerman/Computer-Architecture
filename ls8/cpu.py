@@ -17,8 +17,8 @@ class CPU:
         self.address = 0
 
         # For now, we've just hardcoded a program:
-        LDI = 0b10000010,
-        PRN = 0b01000111,
+        LDI = 0b10000010
+        PRN = 0b01000111
         HALT = 0b00000001
 
 
@@ -74,7 +74,8 @@ class CPU:
         while running:
             command = self.ram[pc]
             #LDI
-            if command == (130,):
+            #if command == (130,):
+            if command == 130:
                 self.ram_write(8)
                 pc += 1
             #HALT
@@ -82,7 +83,7 @@ class CPU:
                 running = False
                 pc += 1
             #PRN
-            elif command == (71,):
+            elif command == 71:
                 self.ram_read(self.address)
                 pc +=1
 
@@ -93,3 +94,6 @@ class CPU:
     def ram_write(self, mdr):
         self.address += 1
         self.ram[self.address] = mdr
+
+
+##################
