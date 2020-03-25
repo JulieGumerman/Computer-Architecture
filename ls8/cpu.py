@@ -17,18 +17,9 @@ class CPU:
         self.MUL = 162
 
 
-
-    #I'm not quite sure what this does yet....Maybe I should check...
-    filename = sys.argv[1]
-
-    # if len(sys.argv) != 2: 
-    #     print(f"usage: {filename} filename")
-    #     sys.exit(1)
-
-
-
-    def load(self, filename):
-
+    def load(self):
+        print(sys.argv)
+        filename = sys.argv[1]
         try:
             with open(filename) as f:
                 for line in f:
@@ -36,10 +27,10 @@ class CPU:
                     num = comment_split[0].strip()
                     if num == "":
                         continue
-                    val = int(num)
+                    val = int(num, 2)
                     self.ram[self.address] = val
                     self.address += 1
-        
+                    print(val)
         except FileNotFoundError:
             print("File not found")
             sys.exit(2)
