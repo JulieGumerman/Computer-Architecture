@@ -15,6 +15,8 @@ class CPU:
         self.HLT = 1
         self.PRN = 71
         self.MUL = 162
+        self.PUSH = 69
+        self.POP = 70
 
 
     def load(self):
@@ -90,6 +92,10 @@ class CPU:
                 register_address = self.ram[self.address + 1]
                 print(self.reg[register_address])
                 pc += 2
+            elif command == self.POP:
+                pass
+            elif command == self.PUSH:
+                pass
             else: 
                 print("Command not in system. Game over")
                 sys.exit(1)
