@@ -1,38 +1,44 @@
 import sys
 
-PRINT_BEEJ = 1
-HALT = 2
-PRINT_NUM = 3
-SAVE = 4 #saves value to register
-PRINT_REGISTER = 5
-ADD = 6
+if len(sys.argv) != 2:
+    print("usage: file.py filename")
+    sys.exit(1)
+
+filename = sys.argv[1]
+
+# PRINT_BEEJ = 1
+# HALT = 2
+# PRINT_NUM = 3
+# SAVE = 4 #saves value to register
+# PRINT_REGISTER = 5
+# ADD = 6
 
 
-memory = [
-    PRINT_BEEJ,
-    SAVE,
-    65,
-    2,
-    SAVE,
-    20,
-    3,
-    ADD,
-    2,
-    3,
-    PRINT_REGISTER,
-    2,
-    HALT
+# memory = [
+#     PRINT_BEEJ,
+#     SAVE,
+#     65,
+#     2,
+#     SAVE,
+#     20,
+#     3,
+#     ADD,
+#     2,
+#     3,
+#     PRINT_REGISTER,
+#     2,
+#     HALT
 
 
 
-]
+# ]
 
-#What does this do?
-register = [0] * 8
+# #What does this do?
+# register = [0] * 8
 
-#pc is "program counter"
-pc = 0
-running = True
+# #pc is "program counter"
+# pc = 0
+# running = True
 
 def load_memory(filename):
     try:
@@ -84,4 +90,3 @@ def load_memory(filename):
 #     else:
 #         print(f"Unknown instruction: {command}")
 #         sys.exit(1)
-    

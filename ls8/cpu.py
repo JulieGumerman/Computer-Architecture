@@ -11,6 +11,13 @@ class CPU:
         self.counter = 0
         self.address = [0]
 
+
+    #I'm not quite sure what this does yet....Maybe I should check...
+    if len(sys.argv) != 2: 
+        print("usage: file.py filename")
+        sys.exit(1)
+    filename = sys.argv[1]
+
     def load(self):
         """Load a program into memory."""
 
@@ -74,7 +81,6 @@ class CPU:
         while running:
             command = self.ram[pc]
             #LDI
-            #if command == (130,):
             if command == 130:
                 self.ram_write(8)
                 pc += 1
@@ -94,6 +100,22 @@ class CPU:
     def ram_write(self, mdr):
         self.address += 1
         self.ram[self.address] = mdr
+    
+    def load(filename):
+        try:
+            with open(filename) as f:
+                for line in f:
+                    print(line)
+                    comment_split = line.split("#")
+                    num = comment_split.strip()
+                    if num == "":
+                        continue
+
+                    val = int(num)
+        
+        except FileNotFoundError:
+            print("File not found")
+            sys.exit(2)
 
 
 ##################
