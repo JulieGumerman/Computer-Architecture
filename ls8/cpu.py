@@ -9,7 +9,7 @@ class CPU:
         """Construct a new CPU."""
         self.ram = [0] * 256
         self.counter = 0
-        self.address = [0]
+        self.address = 0
 
 
     #I'm not quite sure what this does yet....Maybe I should check...
@@ -22,14 +22,12 @@ class CPU:
         try:
             with open(filename) as f:
                 for line in f:
-                    print(line)
                     comment_split = line.split("#")
-                    num = comment_split.strip()
-                    if num == "":
-                        continue
-
+                    num = comment_split[0].strip()
                     val = int(num)
+                    print(val)
                     self.ram[self.address] = val
+                    self.address += 1
         
         except FileNotFoundError:
             print("File not found")
