@@ -8,7 +8,7 @@ class CPU:
     def __init__(self):
         """Construct a new CPU."""
         self.ram = [0] * 256
-        self.register = [0] * 8
+        self.reg = [0] * 8
         self.counter = 0
         self.address = 0
         self.LDI = 131
@@ -75,7 +75,12 @@ class CPU:
 
         if op == "ADD":
             self.reg[reg_a] += self.reg[reg_b]
-        #elif op == "SUB": etc
+        elif op == "SUB":
+            self.reg[reg_a] -= self.reg[reg_b]
+        elif op == "MUL":
+            self.reg[reg_a] *= self.reg[reg_b]
+        elif op == "DIV":
+            self.reg[reg_a] /= self.reg[reg_b]
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -107,8 +112,8 @@ class CPU:
             #LDI
             #if command == 130:
             if command == self.LDI:
-                register_address = self.ram[self.address + 1]
-                value = self.ram[self.address + 2]
+                #register_address = self.ram[self.address + 1]
+                #value = self.ram[self.address + 2]
                 self.register[reg_address] = value
 
 
@@ -126,12 +131,14 @@ class CPU:
                 #implement multiply functionality
                 #How do you know what you are multiplying
                 pass
-                self.alu(operand, #, #)
+                self.alu(MUL, 0, 1)
             #PRN
             #elif command == 71:
             elif command == self.PRN:
                 #self.ram_read(self.address)
                 pc +=1
+            else:
+                pass
 
     
     def ram_read(self, mar):
