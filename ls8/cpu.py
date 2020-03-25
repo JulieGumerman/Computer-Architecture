@@ -21,9 +21,9 @@ class CPU:
     #I'm not quite sure what this does yet....Maybe I should check...
     filename = sys.argv[1]
 
-    if len(sys.argv) != 2: 
-        print(f"usage: {filename} filename")
-        sys.exit(1)
+    # if len(sys.argv) != 2: 
+    #     print(f"usage: {filename} filename")
+    #     sys.exit(1)
 
 
 
@@ -109,33 +109,20 @@ class CPU:
         running = True
         while running:
             command = self.ram[pc]
-            #LDI
-            #if command == 130:
             if command == self.LDI:
-                #register_address = self.ram[self.address + 1]
-                #value = self.ram[self.address + 2]
+                register_address = self.ram[self.address + 1]
+                value = self.ram[self.address + 2]
                 self.register[reg_address] = value
-
-
-                #self.ram_write(8)
-                #self.ram_write(#How do you grab those two #s?)
-                #pc += 1
                 pc += 3
-            #HALT
-            #elif command == 1:
             elif command == self.HLT:
                 running = False
                 pc += 1
-            #MUL
             elif command == self.MUL:
-                #implement multiply functionality
-                #How do you know what you are multiplying
-                pass
                 self.alu(MUL, 0, 1)
-            #PRN
-            #elif command == 71:
+                pc += 1 
             elif command == self.PRN:
-                #self.ram_read(self.address)
+                register_address = self.ram[self.address + 1]
+                print(self.register[register_address])
                 pc +=1
             else:
                 pass
