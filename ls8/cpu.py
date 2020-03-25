@@ -10,9 +10,9 @@ class CPU:
         self.ram = [0] * 256
         self.counter = 0
         self.address = 0
-        self.LDI = 10000010
-        self.HLT = 00000001
-        self.PRN = 01000111
+        self.LDI = 131
+        self.HLT = 1
+        self.PRN = 71
 
 
 
@@ -32,7 +32,7 @@ class CPU:
                 for line in f:
                     comment_split = line.split("#")
                     num = comment_split[0].strip()
-                    val = int(num)
+                    val = int(num, 2)
                     self.ram[self.address] = val
                     self.address += 1
         
@@ -105,8 +105,10 @@ class CPU:
             #LDI
             #if command == 130:
             if command == self.LDI:
-                self.ram_write(8)
-                pc += 1
+                #self.ram_write(8)
+                #self.ram_write(#How do you grab those two #s?)
+                #pc += 1
+                pc += 3
             #HALT
             #elif command == 1:
             if command == self.HLT:
@@ -115,16 +117,20 @@ class CPU:
             #PRN
             #elif command == 71:
             elif command == self.PRN:
-                self.ram_read(self.address)
+                #self.ram_read(self.address)
                 pc +=1
 
     
-    # def ram_read(self, mar):
-    #     print(self.ram[mar])
+    def ram_read(self, mar):
+         print(self.ram[mar])
     
-    # def ram_write(self, mdr):
-    #     self.address += 1
-    #     self.ram[self.address] = mdr
+    #def ram_write(self, mdr):
+    def ram_write(self, input1, input2)
+        self.address += 1
+        self.ram[self.address] = input1
+        self.address += 1
+        self.ram[self.address] = input2
+    #    self.ram[self.address] = mdr
     
 
 
