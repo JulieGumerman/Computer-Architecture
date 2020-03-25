@@ -8,5 +8,7 @@ from cpu import *
 
 cpu = CPU()
 
-cpu.load(sys.argv[1])
+program = sys.argv[1]
+
+cpu.load(program)
 cpu.run()
