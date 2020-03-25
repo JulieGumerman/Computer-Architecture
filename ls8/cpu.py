@@ -8,11 +8,13 @@ class CPU:
     def __init__(self):
         """Construct a new CPU."""
         self.ram = [0] * 256
+        self.register = [0] * 8
         self.counter = 0
         self.address = 0
         self.LDI = 131
         self.HLT = 1
         self.PRN = 71
+        self.MUL = 162
 
 
 
@@ -105,15 +107,26 @@ class CPU:
             #LDI
             #if command == 130:
             if command == self.LDI:
+                register_address = self.ram[self.address + 1]
+                value = self.ram[self.address + 2]
+                self.register[reg_address] = value
+
+
                 #self.ram_write(8)
                 #self.ram_write(#How do you grab those two #s?)
                 #pc += 1
                 pc += 3
             #HALT
             #elif command == 1:
-            if command == self.HLT:
+            elif command == self.HLT:
                 running = False
                 pc += 1
+            #MUL
+            elif command == self.MUL:
+                #implement multiply functionality
+                #How do you know what you are multiplying
+                pass
+                self.alu(operand, #, #)
             #PRN
             #elif command == 71:
             elif command == self.PRN:
@@ -125,12 +138,10 @@ class CPU:
          print(self.ram[mar])
     
     #def ram_write(self, mdr):
-    def ram_write(self, input1, input2)
+    def ram_write(self, mdr)
         self.address += 1
-        self.ram[self.address] = input1
-        self.address += 1
-        self.ram[self.address] = input2
-    #    self.ram[self.address] = mdr
+        self.ram[self.address] = mdr
+
     
 
 
