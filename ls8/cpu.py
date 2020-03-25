@@ -18,32 +18,49 @@ class CPU:
         sys.exit(1)
     filename = sys.argv[1]
 
-    def load(self):
-        """Load a program into memory."""
+    def load(self, filename):
+        try:
+            with open(filename) as f:
+                for line in f:
+                    print(line)
+                    comment_split = line.split("#")
+                    num = comment_split.strip()
+                    if num == "":
+                        continue
 
-        self.address = 0
+                    val = int(num)
+                    self.ram[self.address] = val
+        
+        except FileNotFoundError:
+            print("File not found")
+            sys.exit(2)
 
-        # For now, we've just hardcoded a program:
-        LDI = 0b10000010
-        PRN = 0b01000111
-        HALT = 0b00000001
+    # def load(self):
+    #     """Load a program into memory."""
 
+    #     self.address = 0
 
-        program = [
-            # From print8.ls8
-            LDI, # LDI R0,8
-            #0b00000000,
-            #0b00001000,
-            PRN,
-            #0b00000000,
-            HALT, # HLT
-        ]
-
+    #     # For now, we've just hardcoded a program:
+    #     LDI = 0b10000010
+    #     PRN = 0b01000111
+    #     HALT = 0b00000001
 
 
-        for instruction in program:
-            self.ram[self.address] = instruction
-            self.address += 1
+    #     program = [
+    #         # From print8.ls8
+    #         LDI, # LDI R0,8
+    #         #0b00000000,
+    #         #0b00001000,
+    #         PRN,
+    #         #0b00000000,
+    #         HALT, # HLT
+    #     ]
+
+
+
+    #     for instruction in program:
+    #         self.ram[self.address] = instruction
+    #         self.address += 1
 
 
     def alu(self, op, reg_a, reg_b):
@@ -94,28 +111,14 @@ class CPU:
                 pc +=1
 
     
-    def ram_read(self, mar):
-        print(self.ram[mar])
+    # def ram_read(self, mar):
+    #     print(self.ram[mar])
     
-    def ram_write(self, mdr):
-        self.address += 1
-        self.ram[self.address] = mdr
+    # def ram_write(self, mdr):
+    #     self.address += 1
+    #     self.ram[self.address] = mdr
     
-    def load(filename):
-        try:
-            with open(filename) as f:
-                for line in f:
-                    print(line)
-                    comment_split = line.split("#")
-                    num = comment_split.strip()
-                    if num == "":
-                        continue
 
-                    val = int(num)
-        
-        except FileNotFoundError:
-            print("File not found")
-            sys.exit(2)
 
 
 ##################
