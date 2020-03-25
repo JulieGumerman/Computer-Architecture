@@ -34,7 +34,9 @@ class CPU:
                 for line in f:
                     comment_split = line.split("#")
                     num = comment_split[0].strip()
-                    val = int(num, 2)
+                    if num == "":
+                        continue
+                    val = int(num)
                     self.ram[self.address] = val
                     self.address += 1
         
@@ -112,13 +114,13 @@ class CPU:
             if command == self.LDI:
                 register_address = self.ram[self.address + 1]
                 value = self.ram[self.address + 2]
-                self.register[reg_address] = value
+                self.register[register_address] = value
                 pc += 3
             elif command == self.HLT:
                 running = False
                 pc += 1
             elif command == self.MUL:
-                self.alu(MUL, 0, 1)
+                self.alu(self.MUL, 0, 1)
                 pc += 1 
             elif command == self.PRN:
                 register_address = self.ram[self.address + 1]
@@ -132,7 +134,7 @@ class CPU:
          print(self.ram[mar])
     
     #def ram_write(self, mdr):
-    def ram_write(self, mdr)
+    def ram_write(self, mdr):
         self.address += 1
         self.ram[self.address] = mdr
 
