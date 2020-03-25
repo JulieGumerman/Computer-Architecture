@@ -11,7 +11,7 @@ class CPU:
         self.reg = [0] * 8
         self.counter = 0
         self.address = 0
-        self.LDI = 131
+        self.LDI = 130
         self.HLT = 1
         self.PRN = 71
         self.MUL = 162
@@ -34,33 +34,6 @@ class CPU:
         except FileNotFoundError:
             print("File not found")
             sys.exit(2)
-
-    # def load(self):
-    #     """Load a program into memory."""
-
-    #     self.address = 0
-
-    #     # For now, we've just hardcoded a program:
-    #     LDI = 0b10000010
-    #     PRN = 0b01000111
-    #     HALT = 0b00000001
-
-
-    #     program = [
-    #         # From print8.ls8
-    #         LDI, # LDI R0,8
-    #         #0b00000000,
-    #         #0b00001000,
-    #         PRN,
-    #         #0b00000000,
-    #         HALT, # HLT
-    #     ]
-
-
-
-    #     for instruction in program:
-    #         self.ram[self.address] = instruction
-    #         self.address += 1
 
 
     def alu(self, op, reg_a, reg_b):
@@ -105,21 +78,22 @@ class CPU:
             if command == self.LDI:
                 register_address = self.ram[self.address + 1]
                 value = self.ram[self.address + 2]
-                self.register[register_address] = value
+                self.reg[register_address] = value
                 pc += 3
             elif command == self.HLT:
                 running = False
                 pc += 1
+                sys.exit(1)
             elif command == self.MUL:
-                self.alu(self.MUL, 0, 1)
-                pc += 1 
+                self.alu("MUL", 0, 1)
+                pc += 3
             elif command == self.PRN:
                 register_address = self.ram[self.address + 1]
-                print(self.register[register_address])
-                pc +=1
-            else:
-                pass
-
+                print(self.reg[register_address])
+                pc += 2
+            else: 
+                print("Command not in system. Game over")
+                sys.exit(1)
     
     def ram_read(self, mar):
          print(self.ram[mar])
