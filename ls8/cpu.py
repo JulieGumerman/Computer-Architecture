@@ -73,6 +73,7 @@ class CPU:
 
     def run(self):
         pc = 0
+        SP = 7
         running = True
         while running:
             command = self.ram[pc]
@@ -93,9 +94,17 @@ class CPU:
                 print(self.reg[register_address])
                 pc += 2
             elif command == self.POP:
-                pass
+                reg = self.ram[self.address + 1]
+                val = self.ram[self.reg[SP]]
+                self.reg[reg] = val
+                self.reg[SP]
+                pc += 2
             elif command == self.PUSH:
-                pass
+                reg = self.ram[self.address + 1]
+                val = self.reg[reg]
+                self.ram[self.reg[SP]] = val
+                SP -= 1
+                pc += 2
             else: 
                 print("Command not in system. Game over")
                 sys.exit(1)
