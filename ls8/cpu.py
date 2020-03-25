@@ -76,9 +76,15 @@ class CPU:
         while running:
             command = self.ram[pc]
             if command == self.LDI:
-                register_address = self.ram[self.address + 1]
-                value = self.ram[self.address + 2]
+                print("self address", self.address)
+                #register_address = self.ram[self.address + 1]
+                register_address = self.ram[pc + 1]
+                print("register address", register_address)
+                #value = self.ram[self.address + 2]
+                value = self.ram[pc + 2]
+                print("register value", value)
                 self.reg[register_address] = value
+                print("self.reg", self.reg)
                 pc += 3
             elif command == self.HLT:
                 running = False
