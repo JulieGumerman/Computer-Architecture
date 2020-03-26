@@ -15,6 +15,7 @@ class CPU:
         self.HLT = 1
         self.PRN = 71
         self.MUL = 162
+        self.ADD = 160
         self.PUSH = 69
         self.POP = 70
         self.SP = 7
@@ -91,6 +92,9 @@ class CPU:
             elif command == self.MUL:
                 #self.alu("MUL", 0, 1)
                 self.alu("MUL", self.ram[pc+1], self.ram[pc+2])
+                pc += 3
+            elif command == self.ADD:
+                self.alu("ADD", self.ram[pc+1], self.ram[pc+2])
                 pc += 3
             elif command == self.PRN:
                 #register_address = self.ram[self.address + 1]
