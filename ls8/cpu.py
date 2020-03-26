@@ -94,14 +94,16 @@ class CPU:
                 print(self.reg[register_address])
                 pc += 2
             elif command == self.POP:
-                reg = self.ram[self.address + 1]
+                #reg = self.ram[self.address + 1]
+                reg = self.ram[pc + 1]
                 val = self.ram[self.reg[self.SP]]
                 self.reg[reg] = val
                 self.reg[self.SP] += 1
                 pc += 2
             elif command == self.PUSH:
                 self.reg[self.SP] -= 1
-                reg = self.ram[self.address + 1]
+                reg = self.ram[pc + 1]
+                #reg = self.ram[self.address + 1]
                 val = self.reg[reg]
                 self.ram[self.reg[self.SP]] = val
                 
