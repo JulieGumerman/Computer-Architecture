@@ -14,6 +14,8 @@ PRINT_REGISTER = 5
 ADD = 6
 PUSH = 7
 POP = 8
+CALL = 9
+RET = 10
 
 
 # memory = [
@@ -103,7 +105,15 @@ while running:
         register[reg] = val
         register[SP]
         pc += 2
+    elif command = CALL:
+        register[SP] -= 1
+        memory[register[SP]] = pc + 2
+        reg = memory[pc + 1]
+        pc = register[reg]
 
+    elif command = RET:
+        pc = memory[register[SP]]
+        register[SP] += 1
     else:
         print(f"Unknown instruction: {command}")
         sys.exit(1)

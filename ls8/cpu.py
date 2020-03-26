@@ -17,6 +17,9 @@ class CPU:
         self.MUL = 162
         self.PUSH = 69
         self.POP = 70
+        self.SP = 7
+        self.CALL = 80
+        self.RET = 17
 
 
     def load(self):
@@ -73,7 +76,6 @@ class CPU:
 
     def run(self):
         pc = 0
-        SP = 7
         running = True
         while running:
             command = self.ram[pc]
@@ -87,24 +89,33 @@ class CPU:
                 pc += 1
                 sys.exit(1)
             elif command == self.MUL:
-                self.alu("MUL", 0, 1)
+                #self.alu("MUL", 0, 1)
+                self.alu("MUL", self.ram[pc+1], self.ram[pc+2])
                 pc += 3
             elif command == self.PRN:
-                register_address = self.ram[self.address + 1]
+                #register_address = self.ram[self.address + 1]
+                register_address = self.ram[pc + 1]
                 print(self.reg[register_address])
                 pc += 2
             elif command == self.POP:
-                reg = self.ram[self.address + 1]
-                val = self.ram[self.reg[SP]]
+                #reg = self.ram[self.address + 1]
+                reg = self.ram[pc + 1]
+                val = self.ram[self.reg[self.SP]]
                 self.reg[reg] = val
-                self.reg[SP]
+                self.reg[self.SP] += 1
                 pc += 2
             elif command == self.PUSH:
-                reg = self.ram[self.address + 1]
+                reg = self.ram[pc + 1]
+                #reg = self.ram[self.address + 1]
                 val = self.reg[reg]
-                self.ram[self.reg[SP]] = val
-                SP -= 1
+                self.reg[self.SP] -= 1
+                self.ram[self.reg[self.SP]] = val
+                
                 pc += 2
+            elif command == self.CALL:
+                pass
+            elif command == self.RET:
+                pass
             else: 
                 print("Command not in system. Game over")
                 sys.exit(1)
