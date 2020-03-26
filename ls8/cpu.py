@@ -19,7 +19,7 @@ class CPU:
         self.POP = 70
         self.SP = 7
         self.CALL = 80
-        SELF.RET = 17
+        self.RET = 17
 
 
     def load(self):
