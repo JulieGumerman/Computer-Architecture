@@ -89,7 +89,8 @@ class CPU:
                 pc += 1
                 sys.exit(1)
             elif command == self.MUL:
-                self.alu("MUL", 0, 1)
+                #self.alu("MUL", 0, 1)
+                self.alu("MUL", self.ram[pc+1], self.ram[pc+2])
                 pc += 3
             elif command == self.PRN:
                 register_address = self.ram[self.address + 1]
