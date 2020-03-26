@@ -113,9 +113,14 @@ class CPU:
                 
                 pc += 2
             elif command == self.CALL:
-                pass
+                self.reg[self.SP] -= 1
+                self.ram[self.reg[self.SP]] = pc + 2
+                reg = self.ram[pc + 1]
+                pc = self.reg[reg]
             elif command == self.RET:
-                pass
+                pc = self.ram[self.reg[self.SP]]
+                self.reg[self.SP] += 1
+                
             else: 
                 print("Command not in system. Game over")
                 sys.exit(1)
