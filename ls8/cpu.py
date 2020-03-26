@@ -90,19 +90,16 @@ class CPU:
                 pc += 1
                 sys.exit(1)
             elif command == self.MUL:
-                #self.alu("MUL", 0, 1)
                 self.alu("MUL", self.ram[pc+1], self.ram[pc+2])
                 pc += 3
             elif command == self.ADD:
                 self.alu("ADD", self.ram[pc+1], self.ram[pc+2])
                 pc += 3
             elif command == self.PRN:
-                #register_address = self.ram[self.address + 1]
                 register_address = self.ram[pc + 1]
                 print(self.reg[register_address])
                 pc += 2
             elif command == self.POP:
-                #reg = self.ram[self.address + 1]
                 reg = self.ram[pc + 1]
                 val = self.ram[self.reg[self.SP]]
                 self.reg[reg] = val
@@ -110,11 +107,9 @@ class CPU:
                 pc += 2
             elif command == self.PUSH:
                 reg = self.ram[pc + 1]
-                #reg = self.ram[self.address + 1]
                 val = self.reg[reg]
                 self.reg[self.SP] -= 1
                 self.ram[self.reg[self.SP]] = val
-                
                 pc += 2
             elif command == self.CALL:
                 self.reg[self.SP] -= 1
@@ -132,13 +127,7 @@ class CPU:
     def ram_read(self, mar):
          print(self.ram[mar])
     
-    #def ram_write(self, mdr):
+
     def ram_write(self, mdr):
         self.address += 1
         self.ram[self.address] = mdr
-
-    
-
-
-
-##################
