@@ -101,10 +101,10 @@ class CPU:
                 self.reg[self.SP] += 1
                 pc += 2
             elif command == self.PUSH:
-                self.reg[self.SP] -= 1
                 reg = self.ram[pc + 1]
                 #reg = self.ram[self.address + 1]
                 val = self.reg[reg]
+                self.reg[self.SP] -= 1
                 self.ram[self.reg[self.SP]] = val
                 
                 pc += 2
