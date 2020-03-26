@@ -18,6 +18,8 @@ class CPU:
         self.PUSH = 69
         self.POP = 70
         self.SP = 7
+        self.CALL = 80
+        SELF.RET = 17
 
 
     def load(self):
@@ -108,6 +110,10 @@ class CPU:
                 self.ram[self.reg[self.SP]] = val
                 
                 pc += 2
+            elif command == self.CALL:
+                pass
+            elif command == self.RET:
+                pass
             else: 
                 print("Command not in system. Game over")
                 sys.exit(1)
