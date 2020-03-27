@@ -165,7 +165,8 @@ class CPU:
                 Machine code:        
                 """
                 if self.equal_flag == 1:
-                    pc = self.reg[self.ram[pc + 1]]
+                    location = pc + 1
+                    pc = self.reg[self.ram[location]]
                 else:
                     pc += 2
             elif command == self.JNE:
@@ -180,7 +181,8 @@ class CPU:
                 56 0r
                 """
                 if self.equal_flag == 0:
-                    pc = self.reg[self.ram[pc + 1]]
+                    location = pc + 1
+                    pc = self.reg[self.ram[location]]
                 else:
                     pc += 2
             ##SPRINT IMPLEMENTATION ABOVE THIS LINE
