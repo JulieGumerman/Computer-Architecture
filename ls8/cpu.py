@@ -25,11 +25,7 @@ class CPU:
         self.JMP = 84
         self.JEQ = 85
         self.JNE = 86
-        self.equal_flag = 0
-#        self.equal_flag = None
-#        self.less_than_flag = 
-
-#        self.greater_than_flag = None
+        self.fl = 7
 
 
     def load(self):
@@ -61,6 +57,9 @@ class CPU:
             self.reg[reg_a] *= self.reg[reg_b]
         elif op == "DIV":
             self.reg[reg_a] /= self.reg[reg_b]
+        # elif op == "CMP":
+        #     if reg_a == reg_b:
+        #         self.equal_flag == 1
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -130,19 +129,16 @@ class CPU:
                 self.reg[self.SP] += 1
             ###SPRINT IMPLEMENTATION BELOW THIS LINE
             elif command == self.CMP:
+                #self.alu("CMP", self.ram[pc + 1], self.ram[pc + 2])
                 reg_a = self.ram[pc + 1]
                 reg_b = self.ram[pc +2]
                 if reg_a == reg_b:
                     print("triggered equal")
-                    self.equal_flag = 1
-                    self.less_than_flag = 0
-                    self.greater_than_flag = 0
+                    self.fl = 1
                 elif reg_a < reg_b:
-                    self.less_than_flag = 1
-                    self.greater_than_flag = 0
+                    self.fl = 2
                 elif reg_a > reg_b:
-                    self.less_than_flag = 0
-                    self.greater_than_flag = 1
+                    self.fl = 8
                 pc += 3
             elif command == self.JMP:
                 """
@@ -164,7 +160,7 @@ class CPU:
 
                 Machine code:        
                 """
-                if self.equal_flag == 1:
+                if self.fl == 1:
                     location = pc + 1
                     pc = self.reg[self.ram[location]]
                 else:
@@ -180,7 +176,7 @@ class CPU:
                 01010110 00000rrr
                 56 0r
                 """
-                if self.equal_flag == 0:
+                if self.fl != 1:
                     location = self.ram[pc + 1]
                     pc = self.reg[location]
                 else:
