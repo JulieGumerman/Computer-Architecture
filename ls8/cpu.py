@@ -181,8 +181,8 @@ class CPU:
                 56 0r
                 """
                 if self.equal_flag == 0:
-                    location = pc + 1
-                    pc = self.reg[self.ram[location]]
+                    location = self.ram[pc + 1]
+                    pc = self.reg[location]
                 else:
                     pc += 2
             ##SPRINT IMPLEMENTATION ABOVE THIS LINE
