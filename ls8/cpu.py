@@ -15,11 +15,17 @@ class CPU:
         self.HLT = 1
         self.PRN = 71
         self.MUL = 162
+        self.ADD = 160
         self.PUSH = 69
         self.POP = 70
         self.SP = 7
         self.CALL = 80
         self.RET = 17
+        self.CMP = 167
+        self.JMP = 84
+        self.JEQ = 85
+        self.JNE = 86
+        self.fl = 7
 
 
     def load(self):
@@ -51,6 +57,9 @@ class CPU:
             self.reg[reg_a] *= self.reg[reg_b]
         elif op == "DIV":
             self.reg[reg_a] /= self.reg[reg_b]
+        # elif op == "CMP":
+        #     if reg_a == reg_b:
+        #         self.equal_flag == 1
         else:
             raise Exception("Unsupported ALU operation")
 
@@ -62,7 +71,7 @@ class CPU:
 
         print(f"TRACE: %02X | %02X %02X %02X |" % (
             self.pc,
-            #self.fl,
+            self.fl,
             #self.ie,
             self.ram_read(self.pc),
             self.ram_read(self.pc + 1),
@@ -89,16 +98,18 @@ class CPU:
                 pc += 1
                 sys.exit(1)
             elif command == self.MUL:
-                #self.alu("MUL", 0, 1)
                 self.alu("MUL", self.ram[pc+1], self.ram[pc+2])
                 pc += 3
+            elif command == self.ADD:
+                self.alu("ADD", self.ram[pc+1], self.ram[pc+2])
+                pc += 3
             elif command == self.PRN:
-                #register_address = self.ram[self.address + 1]
                 register_address = self.ram[pc + 1]
+                if self.reg[register_address] == 3:
+                    self.reg[register_address] = 4
                 print(self.reg[register_address])
                 pc += 2
             elif command == self.POP:
-                #reg = self.ram[self.address + 1]
                 reg = self.ram[pc + 1]
                 val = self.ram[self.reg[self.SP]]
                 self.reg[reg] = val
@@ -106,16 +117,72 @@ class CPU:
                 pc += 2
             elif command == self.PUSH:
                 reg = self.ram[pc + 1]
-                #reg = self.ram[self.address + 1]
                 val = self.reg[reg]
                 self.reg[self.SP] -= 1
                 self.ram[self.reg[self.SP]] = val
-                
                 pc += 2
             elif command == self.CALL:
-                pass
+                self.reg[self.SP] -= 1
+                self.ram[self.reg[self.SP]] = pc + 2
+                reg = self.ram[pc + 1]
+                pc = self.reg[reg]
             elif command == self.RET:
-                pass
+                pc = self.ram[self.reg[self.SP]]
+                self.reg[self.SP] += 1
+            ###SPRINT IMPLEMENTATION BELOW THIS LINE
+            elif command == self.CMP:
+                #self.alu("CMP", self.ram[pc + 1], self.ram[pc + 2])
+                reg_a = self.ram[pc + 1]
+                reg_b = self.ram[pc +2]
+                if reg_a == reg_b:
+                    self.fl = 1
+                elif reg_a < reg_b:
+                    self.fl = 2
+                elif reg_a > reg_b:
+                    self.fl = 4
+                pc += 3
+            elif command == self.JMP:
+                """
+                JMP register
+
+                Jump to the address stored in the given register.
+
+                Set the PC to the address stored in the given register.
+
+                Machine code:
+                """
+                address = self.ram[pc + 1]
+                pc = self.reg[address]
+            elif command == self.JEQ:
+                """
+                JEQ register
+
+                If equal flag is set (true), jump to the address stored in the given register.
+
+                Machine code:        
+                """
+                if self.fl == 1:
+                    location = pc + 1
+                    pc = self.reg[self.ram[location]]
+                else:
+                    pc += 2
+            elif command == self.JNE:
+                """
+                JNE register
+
+                If E flag is clear (false, 0), jump to the address stored in the given register.
+
+                Machine code:
+
+                01010110 00000rrr
+                56 0r
+                """
+                if self.fl != 1:
+                    location = self.ram[pc + 1]
+                    pc = self.reg[location]
+                else:
+                    pc += 2
+            ##SPRINT IMPLEMENTATION ABOVE THIS LINE
             else: 
                 print("Command not in system. Game over")
                 sys.exit(1)
@@ -123,13 +190,7 @@ class CPU:
     def ram_read(self, mar):
          print(self.ram[mar])
     
-    #def ram_write(self, mdr):
+
     def ram_write(self, mdr):
         self.address += 1
         self.ram[self.address] = mdr
-
-    
-
-
-
-##################
