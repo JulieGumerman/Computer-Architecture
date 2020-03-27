@@ -138,11 +138,9 @@ class CPU:
                     self.less_than_flag = 0
                     self.greater_than_flag = 0
                 elif reg_a < reg_b:
-                    print("triggered less than")
                     self.less_than_flag = 1
                     self.greater_than_flag = 0
                 elif reg_a > reg_b:
-                    print("triggered greater than")
                     self.less_than_flag = 0
                     self.greater_than_flag = 1
                 pc += 3
@@ -167,9 +165,7 @@ class CPU:
                 Machine code:        
                 """
                 if self.equal_flag == 1:
-                    print("HELLO FROM JEQ")
                     pc = self.reg[self.ram[pc + 1]]
-                    #self.JMP
                 else:
                     pc += 2
             elif command == self.JNE:
@@ -185,10 +181,7 @@ class CPU:
                 """
                 if self.equal_flag == 0:
                     pc = self.reg[self.ram[pc + 1]]
-                    #pc = self.ram[pc + 1]
-                    #pc += 1
                 else:
-                    #pc += 2
                     pc += 2
             ##SPRINT IMPLEMENTATION ABOVE THIS LINE
             else: 
