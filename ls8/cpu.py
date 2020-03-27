@@ -21,6 +21,15 @@ class CPU:
         self.SP = 7
         self.CALL = 80
         self.RET = 17
+        self.CMP = 167
+        self.JMP = 84
+        self.JEQ = 85
+        self.JNE = 86
+        self.equal_flag = 0
+#        self.equal_flag = None
+#        self.less_than_flag = 
+
+#        self.greater_than_flag = None
 
 
     def load(self):
@@ -119,7 +128,69 @@ class CPU:
             elif command == self.RET:
                 pc = self.ram[self.reg[self.SP]]
                 self.reg[self.SP] += 1
-                
+            ###SPRINT IMPLEMENTATION BELOW THIS LINE
+            elif command == self.CMP:
+                reg_a = self.ram[pc + 1]
+                reg_b = self.ram[pc +2]
+                if reg_a == reg_b:
+                    print("triggered equal")
+                    self.equal_flag = 1
+                    self.less_than_flag = 0
+                    self.greater_than_flag = 0
+                elif reg_a < reg_b:
+                    print("triggered less than")
+                    self.less_than_flag = 1
+                    self.greater_than_flag = 0
+                elif reg_a > reg_b:
+                    print("triggered greater than")
+                    self.less_than_flag = 0
+                    self.greater_than_flag = 1
+                pc += 3
+            elif command == self.JMP:
+                """
+                JMP register
+
+                Jump to the address stored in the given register.
+
+                Set the PC to the address stored in the given register.
+
+                Machine code:
+                """
+                address = self.ram[pc + 1]
+                pc = self.reg[address]
+            elif command == self.JEQ:
+                """
+                JEQ register
+
+                If equal flag is set (true), jump to the address stored in the given register.
+
+                Machine code:        
+                """
+                if self.equal_flag == 1:
+                    print("HELLO FROM JEQ")
+                    pc = self.reg[self.ram[pc + 1]]
+                    #self.JMP
+                else:
+                    pc += 2
+            elif command == self.JNE:
+                """
+                JNE register
+
+                If E flag is clear (false, 0), jump to the address stored in the given register.
+
+                Machine code:
+
+                01010110 00000rrr
+                56 0r
+                """
+                if self.equal_flag == 0:
+                    pc = self.reg[self.ram[pc + 1]]
+                    #pc = self.ram[pc + 1]
+                    #pc += 1
+                else:
+                    #pc += 2
+                    pc += 2
+            ##SPRINT IMPLEMENTATION ABOVE THIS LINE
             else: 
                 print("Command not in system. Game over")
                 sys.exit(1)
