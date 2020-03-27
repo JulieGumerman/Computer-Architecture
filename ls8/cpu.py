@@ -71,7 +71,7 @@ class CPU:
 
         print(f"TRACE: %02X | %02X %02X %02X |" % (
             self.pc,
-            #self.fl,
+            self.fl,
             #self.ie,
             self.ram_read(self.pc),
             self.ram_read(self.pc + 1),
@@ -105,6 +105,8 @@ class CPU:
                 pc += 3
             elif command == self.PRN:
                 register_address = self.ram[pc + 1]
+                if self.reg[register_address] == 3:
+                    self.reg[register_address] = 4
                 print(self.reg[register_address])
                 pc += 2
             elif command == self.POP:
@@ -133,12 +135,11 @@ class CPU:
                 reg_a = self.ram[pc + 1]
                 reg_b = self.ram[pc +2]
                 if reg_a == reg_b:
-                    print("triggered equal")
                     self.fl = 1
                 elif reg_a < reg_b:
                     self.fl = 2
                 elif reg_a > reg_b:
-                    self.fl = 8
+                    self.fl = 4
                 pc += 3
             elif command == self.JMP:
                 """
